@@ -3,7 +3,7 @@ import { ApolloClient, InMemoryCache, makeVar } from "@apollo/client";
 export const isLoggedInVar = makeVar(false);
 
 export const client = new ApolloClient({
-  uri: "http://localhost:4000/graphql",
+  uri: "https://nuber-eats-backend-mgh3326.herokuapp.com/graphql",
   cache: new InMemoryCache({
     typePolicies: {
       Query: {
