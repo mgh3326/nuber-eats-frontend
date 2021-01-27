@@ -1,13 +1,16 @@
-import {gql, useMutation} from "@apollo/client";
+import { gql, useMutation } from "@apollo/client";
 import React from "react";
-import {Helmet} from "react-helmet-async";
-import {useForm} from "react-hook-form";
-import {Link, useHistory} from "react-router-dom";
-import {Button} from "../components/button";
-import {FormError} from "../components/form-error";
+import { Helmet } from "react-helmet-async";
+import { useForm } from "react-hook-form";
+import { Link, useHistory } from "react-router-dom";
+import { Button } from "../components/button";
+import { FormError } from "../components/form-error";
 import nuberLogo from "../images/logo.svg";
-import {createAccountMutation, createAccountMutationVariables,} from "../__generated__/createAccountMutation";
-import {UserRole} from "../__generated__/globalTypes";
+import {
+  createAccountMutation,
+  createAccountMutationVariables,
+} from "../__generated__/createAccountMutation";
+import { UserRole } from "../__generated__/globalTypes";
 
 const CREATE_ACCOUNT_MUTATION = gql`
     mutation createAccountMutation($createAccountInput: CreateAccountInput!) {
@@ -40,16 +43,16 @@ export const CreateAccount = () => {
   const history = useHistory();
   const onCompleted = (data: createAccountMutation) => {
     const {
-      createAccount: {ok},
+      createAccount: { ok },
     } = data;
     if (ok) {
       alert("Account Created! Log in now!");
-      history.push("/login");
+      history.push("/");
     }
   };
   const [
     createAccountMutation,
-    {loading, data: createAccountMutationResult},
+    { loading, data: createAccountMutationResult },
   ] = useMutation<createAccountMutation, createAccountMutationVariables>(
     CREATE_ACCOUNT_MUTATION,
     {
@@ -58,10 +61,10 @@ export const CreateAccount = () => {
   );
   const onSubmit = () => {
     if (!loading) {
-      const {email, password, role} = getValues();
+      const { email, password, role } = getValues();
       createAccountMutation({
         variables: {
-          createAccountInput: {email, password, role},
+          createAccountInput: { email, password, role },
         },
       });
     }
@@ -99,7 +102,7 @@ export const CreateAccount = () => {
             <FormError errorMessage={"Please enter a valid email"} />
           )}
           <input
-            ref={register({required: "Password is required"})}
+            ref={register({ required: "Password is required" })}
             required
             name="password"
             type="password"
@@ -114,7 +117,7 @@ export const CreateAccount = () => {
           )}
           <select
             name="role"
-            ref={register({required: true})}
+            ref={register({ required: true })}
             className="input"
           >
             {Object.keys(UserRole).map((role, index) => (
@@ -134,7 +137,7 @@ export const CreateAccount = () => {
         </form>
         <div>
           Already have an account?{" "}
-          <Link to="/login" className="text-lime-600 hover:underline">
+          <Link to="/" className="text-lime-600 hover:underline">
             Log in now
           </Link>
         </div>
