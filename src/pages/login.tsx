@@ -1,16 +1,19 @@
-import {gql, useMutation} from "@apollo/client";
+import { gql, useMutation } from "@apollo/client";
 import React from "react";
-import {Helmet} from "react-helmet-async";
-import {useForm} from "react-hook-form";
-import {Link} from "react-router-dom";
-import {authTokenVar, isLoggedInVar} from "../apollo";
-import {Button} from "../components/button";
-import {FormError} from "../components/form-error";
-import {LOCALSTORAGE_TOKEN} from "../constants";
+import { Helmet } from "react-helmet-async";
+import { useForm } from "react-hook-form";
+import { Link } from "react-router-dom";
+import { authTokenVar, isLoggedInVar } from "../apollo";
+import { Button } from "../components/button";
+import { FormError } from "../components/form-error";
+import { LOCALSTORAGE_TOKEN } from "../constants";
 import nuberLogo from "../images/logo.svg";
-import {loginMutation, loginMutationVariables,} from "../__generated__/loginMutation";
+import {
+  loginMutation,
+  loginMutationVariables,
+} from "../__generated__/loginMutation";
 
-const LOGIN_MUTATION = gql`
+export const LOGIN_MUTATION = gql`
     mutation loginMutation($loginInput: LoginInput!) {
         login(input: $loginInput) {
             ok
@@ -37,7 +40,7 @@ export const Login = () => {
   });
   const onCompleted = (data: loginMutation) => {
     const {
-      login: {ok, token},
+      login: { ok, token },
     } = data;
     if (ok && token) {
       localStorage.setItem(LOCALSTORAGE_TOKEN, token);
@@ -45,13 +48,15 @@ export const Login = () => {
       isLoggedInVar(true);
     }
   };
-  const [loginMutation, {data: loginMutationResult, loading}] = useMutation<loginMutation,
-    loginMutationVariables>(LOGIN_MUTATION, {
+  const [loginMutation, { data: loginMutationResult, loading }] = useMutation<
+    loginMutation,
+    loginMutationVariables
+    >(LOGIN_MUTATION, {
     onCompleted,
   });
   const onSubmit = () => {
     if (!loading) {
-      const {email, password} = getValues();
+      const { email, password } = getValues();
       loginMutation({
         variables: {
           loginInput: {
@@ -94,7 +99,7 @@ export const Login = () => {
             <FormError errorMessage={errors.email?.message} />
           )}
           <input
-            ref={register({required: "Password is required"})}
+            ref={register({ required: "Password is required" })}
             required
             name="password"
             type="password"
@@ -103,9 +108,6 @@ export const Login = () => {
           />
           {errors.password?.message && (
             <FormError errorMessage={errors.password?.message} />
-          )}
-          {errors.password?.type === "minLength" && (
-            <FormError errorMessage="Password must be more than 10 chars." />
           )}
           <Button
             canClick={formState.isValid}
