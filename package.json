@@ -18,7 +18,7 @@
     "autoprefixer": "10.2.4",
     "cypress": "^6.4.0",
     "graphql": "15.5.0",
-    "postcss": "8.2.5",
+    "postcss": "8.4.38",
     "react": "17.0.1",
     "react-dom": "17.0.1",
     "react-helmet": "6.1.0",
